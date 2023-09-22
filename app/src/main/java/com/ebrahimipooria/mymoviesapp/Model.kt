@@ -7,3 +7,4 @@ var genres:ArrayList<String>,
 var images:ArrayList<String>,
 var current_page:String,var per_page:Int,
 var page_count:Int,var total_count:Int)
+

@@ -6,7 +6,7 @@ import retrofit2.http.GET
 interface ApiInterface {
 
     @GET("movies?page=1")
-    fun getData() : Call<DataModel>
+    fun getData() : Call<Model>
 
 
 

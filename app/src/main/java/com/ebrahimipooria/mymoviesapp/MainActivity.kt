@@ -14,7 +14,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var recyclerView : RecyclerView
     lateinit var moviesAdapter: MoviesAdapter
-    var dataList : List<DataModel> = ArrayList()
     var list : List<Model> = ArrayList()
     lateinit var request : ApiInterface
     var url : String = "https://moviesapi.ir/api/v1/"
@@ -25,14 +24,16 @@ class MainActivity : AppCompatActivity() {
 
         var apiClient = ApiClient()
         request = apiClient.getApiClient(url)!!.create(ApiInterface::class.java)
-
         recyclerView = findViewById(R.id.rv_Main_RecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
 
-        request.getData().enqueue(object : Callback <DataModel> {
-            override fun onResponse(call: Call<DataModel>, response: Response<DataModel>) {
+        request.getData().enqueue(object : Callback <Model> {
 
-                list = response.body()!!
+            override fun onResponse(call: Call<Model>, response: Response<Model>) {
+
+                // data dont set
+                var x = response.body()!!
+                list = listOf(x)
                 moviesAdapter = MoviesAdapter(applicationContext, list)
                 recyclerView.adapter = moviesAdapter
 
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-            override fun onFailure(call: Call<DataModel>, t: Throwable) {
+            override fun onFailure(call: Call<Model>, t: Throwable) {
                 Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT).show()
                 Log.e("Error", "My Error Is : "+t.message)
             }
