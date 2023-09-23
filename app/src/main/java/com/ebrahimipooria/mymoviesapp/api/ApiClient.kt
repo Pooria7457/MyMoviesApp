@@ -1,4 +1,4 @@
-package com.ebrahimipooria.mymoviesapp
+package com.ebrahimipooria.mymoviesapp.api
 
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -7,6 +7,8 @@ import retrofit2.Retrofit
 
 open class ApiClient {
     open var retrofit: Retrofit? = null
+
+
 
     open fun getApiClient (baseUrl:String): Retrofit? {
         if(retrofit==null){

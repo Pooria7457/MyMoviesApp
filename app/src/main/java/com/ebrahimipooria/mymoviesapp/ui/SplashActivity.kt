@@ -1,10 +1,11 @@
-package com.ebrahimipooria.mymoviesapp
+package com.ebrahimipooria.mymoviesapp.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ebrahimipooria.mymoviesapp.MainActivity
+import com.ebrahimipooria.mymoviesapp.R
 import java.util.Timer
-import java.util.TimerTask
 import kotlin.concurrent.timerTask
 
 class SplashActivity : AppCompatActivity() {
@@ -14,7 +15,7 @@ class SplashActivity : AppCompatActivity() {
 
         val timer = Timer()
         timer.schedule(timerTask {
-            val intent = Intent(this@SplashActivity,MainActivity::class.java)
+            val intent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent)
             timer.cancel()
             finish()

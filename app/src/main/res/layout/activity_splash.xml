@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@mipmap/ic_bg"
     android:layoutDirection="ltr"
-    tools:context=".SplashActivity">
+    tools:context=".ui.SplashActivity">
 
     <TextView
         android:id="@+id/textView"

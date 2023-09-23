@@ -1,4 +1,4 @@
-package com.ebrahimipooria.mymoviesapp
+package com.ebrahimipooria.mymoviesapp.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.ebrahimipooria.mymoviesapp.R
+import com.ebrahimipooria.mymoviesapp.model.Model
 import com.squareup.picasso.Picasso
 
 class MoviesAdapter(var context: Context, data: List<Model>) :
