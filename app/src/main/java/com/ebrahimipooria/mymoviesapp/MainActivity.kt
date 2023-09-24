@@ -17,9 +17,9 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
+    var list: ArrayList<Model> = ArrayList()
     lateinit var recyclerView: RecyclerView
     lateinit var moviesAdapter: MoviesAdapter
-    var list: ArrayList<Model> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,12 +45,11 @@ class MainActivity : AppCompatActivity() {
                 moviesAdapter = MoviesAdapter(applicationContext, list)
                 recyclerView.adapter = moviesAdapter
 
-                Toast.makeText(this@MainActivity, "Success", Toast.LENGTH_SHORT).show()
             }
 
             override fun onFailure(call: Call<ResponseListMovies>, t: Throwable) {
                 Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT).show()
-                Log.e("KIAA", "My Error Is : " + t.message)
+                Log.e("Log", "My Error Is : " + t.message)
             }
         })
 
