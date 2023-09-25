@@ -1,7 +1,11 @@
 package com.ebrahimipooria.mymoviesapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,9 +25,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     lateinit var moviesAdapter: MoviesAdapter
 
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var edtSearch = findViewById<EditText>(R.id.edt_Main_Search)
+        var imgSearch = findViewById<ImageView>(R.id.img_Main_Search)
 
         //از کلاسی که ساختیم retrofit رو فراخوانی میکنیم
         var retrofit = RetrofitClient.getInstance()
@@ -52,6 +61,38 @@ class MainActivity : AppCompatActivity() {
                 Log.e("Log", "My Error Is : " + t.message)
             }
         })
+
+        imgSearch.setOnClickListener {
+
+            var nameText = edtSearch.text.toString()
+
+            apiInterface.searchMovie(1,nameText).enqueue(
+                object : Callback<ResponseListMovies>{
+                    override fun onResponse(
+                        call: Call<ResponseListMovies>,
+                        response: Response<ResponseListMovies>
+                    ) {
+
+                        list.clear()
+
+                            for (i in response.body()!!.data) {
+                                list.add(i)
+                            }
+
+
+                        moviesAdapter = MoviesAdapter(applicationContext, list)
+                        recyclerView.adapter = moviesAdapter
+                    }
+
+                    override fun onFailure(call: Call<ResponseListMovies>, t: Throwable) {
+                        Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT).show()
+                        Log.e("Log", "My Error Is : " + t.message)
+                    }
+                }
+            )
+
+
+        }
 
 
     }
