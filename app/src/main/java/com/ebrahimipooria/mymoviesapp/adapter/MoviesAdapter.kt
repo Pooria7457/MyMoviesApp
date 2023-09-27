@@ -14,7 +14,7 @@ import com.ebrahimipooria.mymoviesapp.model.Model
 import com.ebrahimipooria.mymoviesapp.ui.DetailActivity
 import com.squareup.picasso.Picasso
 
-class MoviesAdapter(var context: Context, data: List<Model>) :
+class MoviesAdapter(var context: Context, data: ArrayList<Model>) :
     RecyclerView.Adapter<MoviesAdapter.MyViewHolder>() {
     var data: List<Model>
 

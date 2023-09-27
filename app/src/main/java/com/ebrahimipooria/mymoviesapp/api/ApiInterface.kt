@@ -1,11 +1,13 @@
 package com.ebrahimipooria.mymoviesapp.api
 
+import com.ebrahimipooria.mymoviesapp.model.GenresMoviesData
 import com.ebrahimipooria.mymoviesapp.model.ResponseListMovies
 import com.ebrahimipooria.mymoviesapp.model.SingleDataMovie
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+
 
 interface ApiInterface {
 
@@ -17,6 +19,15 @@ interface ApiInterface {
 
     @GET("/api/v1/movies?q=&page=")
     fun searchMovie(@Query("page") page: Int, @Query("q") name: String?): Call<ResponseListMovies>
+
+    @GET("/api/v1/genres")
+    fun genresMovies(): Call<ArrayList<GenresMoviesData>>
+
+    @GET("/api/v1/genres/{genre_id}/movies?page=")
+    fun chooseGenresMovie(
+        @Path("genre_id") genre: Int?,
+        @Query("page") page: Int
+    ): Call<ResponseListMovies>
 
 
 }
