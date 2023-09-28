@@ -1,10 +1,13 @@
 package com.ebrahimipooria.mymoviesapp.api
 
 import com.ebrahimipooria.mymoviesapp.model.GenresMoviesData
+import com.ebrahimipooria.mymoviesapp.model.NewFilmModel
 import com.ebrahimipooria.mymoviesapp.model.ResponseListMovies
 import com.ebrahimipooria.mymoviesapp.model.SingleDataMovie
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -27,6 +30,11 @@ interface ApiInterface {
     fun chooseGenresMovie(
         @Path("genre_id") genre: Int?,
         @Query("page") page: Int
+    ): Call<ResponseListMovies>
+
+    @POST("/api/v1/movies")
+    fun newFilm(
+        @Body newFilmModel: NewFilmModel
     ): Call<ResponseListMovies>
 
 

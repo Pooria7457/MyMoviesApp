@@ -56,11 +56,20 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_Main_RecyclerView"
-        android:layout_marginTop="8dp"
+    <Button
+        android:id="@+id/btn_Main_SaveNewFim"
+        android:layout_margin="8dp"
         android:layout_below="@id/view_Main"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save New Film" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_Main_RecyclerView"
+        android:layout_below="@id/btn_Main_SaveNewFim"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+
 
 </RelativeLayout>

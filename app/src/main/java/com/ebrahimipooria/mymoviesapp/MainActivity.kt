@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,6 +18,7 @@ import com.ebrahimipooria.mymoviesapp.api.RetrofitClient
 import com.ebrahimipooria.mymoviesapp.model.Model
 import com.ebrahimipooria.mymoviesapp.model.ResponseListMovies
 import com.ebrahimipooria.mymoviesapp.ui.GenresActivity
+import com.ebrahimipooria.mymoviesapp.ui.NewFilmActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     lateinit var moviesAdapter: MoviesAdapter
     lateinit var txtGenre: TextView
+    lateinit var btnSave: Button
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         var edtSearch = findViewById<EditText>(R.id.edt_Main_Search)
         var imgSearch = findViewById<ImageView>(R.id.img_Main_Search)
         txtGenre = findViewById<TextView>(R.id.txt_Main_Genre)
+        btnSave = findViewById<Button>(R.id.btn_Main_SaveNewFim)
 
         //از کلاسی که ساختیم retrofit رو فراخوانی میکنیم
         var retrofit = RetrofitClient.getInstance()
@@ -99,13 +103,15 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
-
         txtGenre.setOnClickListener {
             var intent = Intent(this@MainActivity,GenresActivity::class.java)
             startActivityForResult(intent, 1001)
         }
 
+        btnSave.setOnClickListener {
+            val intent = Intent(this@MainActivity,NewFilmActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
