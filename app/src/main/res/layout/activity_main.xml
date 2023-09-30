@@ -12,7 +12,7 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linear_Main"
+        android:id="@+id/linear_Main_edt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -44,7 +44,7 @@
         android:drawableRight="@drawable/baseline_movie_filter_24"
         android:textColor="@color/black"
         android:hint="Choose By Genre"
-        android:layout_below="@id/linear_Main"
+        android:layout_below="@id/linear_Main_edt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <View
@@ -56,17 +56,36 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
-    <Button
-        android:id="@+id/btn_Main_SaveNewFim"
-        android:layout_margin="8dp"
-        android:layout_below="@id/view_Main"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linear_Main_btn"
+        android:layout_below="@id/txt_Main_Genre"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save New Film" />
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_Main_Favorites"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Favorite Films" />
+
+        <Button
+            android:id="@+id/btn_Main_SaveNewFim"
+            android:layout_margin="4dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="Save New Film" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_Main_RecyclerView"
-        android:layout_below="@id/btn_Main_SaveNewFim"
+        android:layout_below="@id/linear_Main_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

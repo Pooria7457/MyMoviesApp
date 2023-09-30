@@ -1,14 +1,19 @@
 package com.ebrahimipooria.mymoviesapp.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.ebrahimipooria.mymoviesapp.MyDatabase
 import com.ebrahimipooria.mymoviesapp.R
 import com.ebrahimipooria.mymoviesapp.api.ApiInterface
 import com.ebrahimipooria.mymoviesapp.api.RetrofitClient
+import com.ebrahimipooria.mymoviesapp.model.Model
+import com.ebrahimipooria.mymoviesapp.model.ResponseListMovies
 import com.ebrahimipooria.mymoviesapp.model.SingleDataMovie
 import com.squareup.picasso.Picasso
 import retrofit2.Call
@@ -17,6 +22,10 @@ import retrofit2.Response
 
 
 class DetailActivity : AppCompatActivity() {
+
+    var myDatabase: MyDatabase? = null
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -28,6 +37,7 @@ class DetailActivity : AppCompatActivity() {
         val txtYear = findViewById<TextView>(R.id.txt_Detail_Year)
         val txtImdbRate = findViewById<TextView>(R.id.txt_Detail_ImdbRate)
         val imgPoster = findViewById<ImageView>(R.id.img_Detail_poster)
+        val btnFavorites = findViewById<Button>(R.id.btn_Detail_Favorites)
 
         val id : Int = intent.extras!!.getInt("id")
         val title : String? = intent.extras!!.getString("title")
@@ -39,6 +49,7 @@ class DetailActivity : AppCompatActivity() {
         val retrofit = RetrofitClient.getInstance()
         val apiInterface = retrofit.create(ApiInterface::class.java)
 
+        myDatabase = MyDatabase(applicationContext)
 
         apiInterface.getSingleMovie(id).enqueue(object : Callback<SingleDataMovie>{
             override fun onResponse(
@@ -57,6 +68,11 @@ class DetailActivity : AppCompatActivity() {
                 Log.e("Log", "My Error Is : " + t.message)
             }
         })
+
+        btnFavorites.setOnClickListener {
+            myDatabase!!.addInfo(id)
+            Toast.makeText(this@DetailActivity,"Success",Toast.LENGTH_SHORT).show()
+        }
 
     }
 

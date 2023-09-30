@@ -2,6 +2,7 @@ package com.ebrahimipooria.mymoviesapp
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.Cursor
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -31,6 +32,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var moviesAdapter: MoviesAdapter
     lateinit var txtGenre: TextView
     lateinit var btnSave: Button
+    lateinit var btnFavorites: Button
+    var myDatabase: MyDatabase? = null
+    lateinit var filmId : ArrayList<Int>
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,10 +42,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
+
+
         var edtSearch = findViewById<EditText>(R.id.edt_Main_Search)
         var imgSearch = findViewById<ImageView>(R.id.img_Main_Search)
         txtGenre = findViewById<TextView>(R.id.txt_Main_Genre)
         btnSave = findViewById<Button>(R.id.btn_Main_SaveNewFim)
+        btnFavorites = findViewById<Button>(R.id.btn_Main_Favorites)
 
         //از کلاسی که ساختیم retrofit رو فراخوانی میکنیم
         var retrofit = RetrofitClient.getInstance()
@@ -112,6 +119,48 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity,NewFilmActivity::class.java)
             startActivity(intent)
         }
+
+        btnFavorites.setOnClickListener {
+            filmId = ArrayList<Int>()
+            myDatabase = MyDatabase(applicationContext)
+            val cursor: Cursor = myDatabase!!.getInfos
+            if(myDatabase!=null) {
+                while (cursor.moveToNext()) {
+                    if (!cursor.isAfterLast) {
+                        filmId.remove(cursor.getInt(1))
+                        filmId.add(cursor.getInt(1))
+                        apiInterface.getAllMovies().enqueue(object : Callback<ResponseListMovies> {
+
+                            override fun onResponse(
+                                call: Call<ResponseListMovies>,
+                                response: Response<ResponseListMovies>
+                            ) {
+                                list.clear()
+                                for (i in response.body()!!.data) {
+                                    for (singleId in filmId) {
+                                        if (i.id.equals(singleId)) {
+                                            list.add(i)
+                                        }
+                                    }
+                                }
+                                moviesAdapter = MoviesAdapter(applicationContext, list)
+                                recyclerView.adapter = moviesAdapter
+
+                            }
+
+                            override fun onFailure(call: Call<ResponseListMovies>, t: Throwable) {
+                                Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT)
+                                    .show()
+                                Log.e("Log", "My Error Is : " + t.message)
+                            }
+                        })
+                    }
+                }
+            }
+
+        }
+
+
 
     }
 
